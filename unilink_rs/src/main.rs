@@ -43,12 +43,12 @@ async fn main() {
     let client_credentials_manager = SpotifyClientCredentials::default()
         .client_id(CLIENT_ID)
         .client_secret(CLIENT_SECRET)
-        .build();
+        .build(); //this causes problems.
     let sp = Spotify::default()
         .client_credentials_manager(client_credentials_manager)
         .build();
 
-    let url = "https://open.spotify.com/track/337H7R2AWIlI9s7M4ugelQ?si=92b3988a139746c7";
+    let url = "https://open.spotify.com/track/337H7R2AWIlI9s7M4ugelQ?si=92b3988a139746c7"; //for example
     let disc = ItemDiscriminant::Track;
 
     let url = SpotifyUrl {
@@ -56,7 +56,10 @@ async fn main() {
         url: url.to_string(),
     };
 
-    let item = parse_spotify_url(&url, &sp).await.unwrap();
+    let item = parse_spotify_url(&url, &sp).await.unwrap(); //actual panic happens here, but I think that's just because of the .await call
+    //it panics deep within rspotify, in reqwests, in serde, when deserializing a json from requesting a token from spotify.
+    //this could be because spotify's changed their API in the year since rspotify was updated
+    //rspotify is undergoing renovations right now, so I'm not going to submit this as a bug; the github version is significantly different from the crates.io version
 
     let new_url = get_spotify_url(&item, &sp).await.unwrap();
 
