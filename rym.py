@@ -24,3 +24,10 @@ def fallback_url(artist:str, album: Optional[str] = None) -> str:
     else:
         url += "&searchtype=artist"
     return url
+
+def get_rym_url(artist: str, album: Optional[str] = None) -> str:
+    naive = naive_parse(artist, album)
+    if is_valid_rym_link(naive):
+        return naive
+    else:
+        return fallback_url(artist, album)
