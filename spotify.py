@@ -28,31 +28,6 @@ def parse_spotify_artist(sp: Spotify, uri: str) -> Optional[str]:
     except:
         return None
 
-def parse_unilink(unilink: str) -> Optional[Union[str, Tuple[str, str], Tuple[str, str, str]]]:
-    try:
-        params = map(lambda param: param.split("="), unilink.split("?")[1].split("&"))
-        dictionary = {}
-        for param in params:
-            dictionary[param[0]] = param[1]
-        if len(dictionary) == 0:
-            return None
-        elif len(dictionary) == 1:
-            return dictionary['artist']
-        elif len(dictionary) == 2:
-            return (dictionary['album'], dictionary['artist'])
-        else:
-            return (dictionary['track'], dictionary['album'], dictionary['artist'])
-    except:
-        return None
-
-def generate_unilink(artist_name: str, album_name: Optional[str] = None, track_name: Optional[str] = None) -> str:
-    url = f"https://unilink.nove.dev?artist={artist_name}"
-    if album_name:
-        url += f"&album={album_name}"
-        if track_name:
-            url += f"&track={track_name}"
-    return url
-
 def get_spotify_track(sp: Spotify, track_name: str, album_name: str, artist_name: str) -> Optional[str]:
     query = "track:" + " ".join([track_name, album_name, artist_name])
     try:
