@@ -1,7 +1,4 @@
-import pprint
-import spotipy
-from spotipy import SpotifyClientCredentials
-import requests as rq
+from spotipy import SpotifyClientCredentials, Spotify
 from typing import AnyStr, Optional, Tuple, Union
 from secret_list import *
 
@@ -13,7 +10,7 @@ prefs = {}
 
 # conversion service from spotify, etc sharing links
 
-sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
+sp = Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
 
 def spotify_url_to_uri(url:str) -> Optional[str]:
     try:
@@ -59,7 +56,7 @@ def parse_unilink(unilink: str) -> Optional[Union[str, Tuple[str, str], Tuple[st
     except:
         return None
 
-def unilink_to_track(artist_name: str, album_name=None, track_name=None) -> str:
+def generate_unilink(artist_name: str, album_name: Optional[str] = None, track_name: Optional[str] = None) -> str:
     url = f"https://unilink.nove.dev?artist={artist_name}"
     if album_name:
         url += f"&album={album_name}"
@@ -67,7 +64,7 @@ def unilink_to_track(artist_name: str, album_name=None, track_name=None) -> str:
             url += f"&track={track_name}"
     return url
 
-def get_spotify_track(track_name: str, album_name: str, artist_name: str) -> Union[str, None]:
+def get_spotify_track(track_name: str, album_name: str, artist_name: str) -> Optional[str]:
     query = "track:" + " ".join([track_name, album_name, artist_name])
     try:
         tracks = sp.search(q=query, limit=10, type="track")['tracks']['items']
