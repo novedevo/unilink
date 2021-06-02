@@ -1,5 +1,4 @@
 from typing import Optional
-
 import requests as rq
 
 def is_valid_rym_link(url: str) -> bool:

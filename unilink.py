@@ -1,5 +1,5 @@
 from spotipy import SpotifyClientCredentials, Spotify
-from typing import AnyStr, Optional, Tuple, Union
+from typing import Optional, Tuple, Union
 from secret_list import *
 from spotify import *
 

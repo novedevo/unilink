@@ -1,5 +1,5 @@
 from spotipy import Spotify
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple
 
 def spotify_url_to_uri(sp: Spotify, url:str) -> Optional[str]:
     try:
