@@ -1,7 +1,11 @@
+from youtube import get_youtube_artist
 from spotipy import SpotifyClientCredentials, Spotify
+from ytmusicapi import YTMusic
 from typing import Optional, Tuple, Union
 from secret_list import *
 from spotify import *
+from youtube import *
+from rym import *
 
 
 prefs = {}
@@ -13,6 +17,9 @@ prefs = {}
 # conversion service from spotify, etc sharing links
 
 sp = Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
+yt = YTMusic()
+
+get_youtube_artist(yt, "Taylor Swift")
 
 def parse_unilink(unilink: str) -> Optional[Union[str, Tuple[str, str], Tuple[str, str, str]]]:
     try:
